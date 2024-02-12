@@ -70,3 +70,56 @@
   </div>
 </body>
 </html>
+#ahahaha
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            transition: top 0.3s;
+        }
+
+        .content {
+            padding-top: 80px; /* Adjust according to the height of the header */
+            height: 2000px; /* Just for demonstration */
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <h1>Your Website</h1>
+    </header>
+    <div class="content">
+        <p>This is some content. Scroll down to see the sticky header effect.</p>
+        <!-- Add more content here -->
+    </div>
+
+    <script>
+        let prevScrollPos = window.pageYOffset;
+        window.onscroll = function() {
+            let currentScrollPos = window.pageYOffset;
+            if (prevScrollPos > currentScrollPos) {
+                document.getElementById("header").style.top = "0";
+            } else {
+                document.getElementById("header").style.top = "-80px"; // Adjust based on header height
+            }
+            prevScrollPos = currentScrollPos;
+        }
+    </script>
+</body>
+</html>
