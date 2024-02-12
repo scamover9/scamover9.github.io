@@ -1,26 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Website</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header {
+      background-color: darkblue;
+      padding: 20px;
+      text-align: center;
+    }
 
-        h1 {
-            font-weight: bold;
-        }
-    </style>
+    button {
+      background-color: darkblue;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: navy;
+    }
+  </style>
 </head>
 <body>
-    <h1>Work in Progress Site Incoming</h1>
-    <p><a href="about.html">About Me</a></p>
-    <p><a href="resources.html">Resources</a></p>
+  <header>
+    <button onclick="window.location.href='about.html'">About</button>
+    <button onclick="window.location.href='page2.html'">Page 2</button>
+    <button onclick="window.location.href='page3.html'">Page 3</button>
+    <button onclick="window.location.href='page4.html'">Page 4</button>
+  </header>
+
+  <div>
+    <h1 style="text-align: center;">Coming Soon</h1>
+  </div>
 </body>
 </html>
