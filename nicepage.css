@@ -21583,9 +21583,6 @@ a.pswp__share--download:hover {
   
   --animation-custom_in-translate_y: -50% !important;
 }
-.u-animation-fixed {
-  position: fixed;
-}
 .u-animation-sticky {
   position: sticky;
   top: 0;
@@ -42105,6 +42102,8 @@ a.u-link.u-text-hover-grey-90:hover {
         
         
         
+        
+        
         }
 
         /** common-rules **/
@@ -42237,6 +42236,11 @@ a.u-link.u-text-hover-grey-90:hover {
         margin-top: 20px;
         margin-bottom: 20px;
         line-height: 1.6;
+        }
+        .u-body
+        {
+        background-image: linear-gradient(#478ac9, #292e33);
+        background-attachment: fixed;
         }
         .u-input
         {

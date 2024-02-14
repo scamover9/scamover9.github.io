@@ -1,9 +1,9 @@
  .u-section-1 {
-  background-image: none;
+  background-image: linear-gradient(#478ac9, #292e33);
 }
 
 .u-section-1 .u-sheet-1 {
-  min-height: 1079px;
+  min-height: 1191px;
 }
 
 .u-section-1 .u-text-1 {
@@ -13,7 +13,7 @@
   --animation-custom_in-rotate: 0deg;
   --animation-custom_in-scale: 0.3;
   font-size: 4.25rem;
-  margin: 73px auto 0;
+  margin: 185px auto 0;
 }
 
 .u-section-1 .u-list-1 {
