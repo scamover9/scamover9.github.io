@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sammy Campos | Resume</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f7fa;
+      --text: #333;
+      --card-bg: #fff;
+      --accent: #0077cc;
+      --shadow: rgba(0, 0, 0, 0.05);
+    }
+    [data-theme="dark"] {
+      --bg: #121212;
+      --text: #eee;
+      --card-bg: #1e1e1e;
+      --accent: #66aaff;
+      --shadow: rgba(0, 0, 0, 0.4);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+    header { text-align: center; margin-bottom: 2rem; }
+    header h1 { font-size: 2.5rem; color: var(--accent); }
+    header p { font-size: 1.1rem; }
+    .theme-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    section {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 10px var(--shadow);
+    }
+    h2 { color: var(--accent); margin-bottom: 0.5rem; }
+    ul { margin-left: 1.5rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .skill {
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+    .skill:hover {
+      background: var(--accent);
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+    }
+    .skill-description {
+      display: none;
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+    }
+    .skill.active .skill-description {
+      display: block;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
+  <header>
+    <h1>Sammy Campos</h1>
+    <p><a href="mailto:scamposrivera@icloud.com">scamposrivera@icloud.com</a> | 469-316-9307</p>
+    <p><a href="http://www.labscamover9.com" target="_blank">www.labscamover9.com</a></p>
+  </header>
+
+  <section>
+    <h2>Skills</h2>
+    <ul>
+      <li class="skill" onclick="toggleSkill(this)">
+        Cisco Packet Tracer
+        <div class="skill-description">Used to simulate network configurations and test network designs.</div>
+      </li>
+      <li class="skill" onclick="toggleSkill(this)">
+        VMware
+        <div class="skill-description">Created and managed virtual machines for personal and academic use.</div>
+      </li>
+      <li class="skill" onclick="toggleSkill(this)">
+        Wireshark
+        <div class="skill-description">Captured and analyzed network packets to understand data flow.</div>
+      </li>
+      <li class="skill" onclick="toggleSkill(this)">
+        Windows 10/Server
+        <div class="skill-description">Installed, configured, and managed Windows OS in lab environments.</div>
+      </li>
+      <li class="skill" onclick="toggleSkill(this)">
+        Microsoft Office Specialist: Associate (Office 2019)
+        <div class="skill-description">Certified in using Word, Excel, and PowerPoint to a professional level.</div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+    <p><strong>BugEyeMedia – IT Support / Team Lead (Ferris High School)</strong><br>
+    Maintained and set up live broadcasting equipment and computers while coordinating a team of 12–18 students.</p>
+
+    <p><strong>Bricktown Gaming – Computer Equipment Manager (Ferris High School)</strong><br>
+    Maintained high-end eSports-capable computers, coordinated with players and coaches to install necessary software.</p>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <ul>
+      <li><strong>Ferris High School (FHS)</strong> – High School Diploma, May 2024</li>
+      <li><strong>Texas State Technical College (TSTC)</strong> – Certificate in Cybersecurity, Aug 2022 – Apr 2024</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Courses</h2>
+    <ul>
+      <li>Personal Computer Hardware</li>
+      <li>Fundamentals to Networking</li>
+      <li>Secure Linux Administration</li>
+      <li>Implementing & Supporting Servers</li>
+      <li>Networking with TCP/IP</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Leadership</h2>
+    <p>Led an eSports team, ensuring all equipment and software was maintained.<br>
+    Also led a student-run news/broadcast class, managing teams of 12–18 members.</p>
+  </section>
+
+  <section>
+    <h2>Download</h2>
+    <p><a href="Sammy Campos Resume.pdf" download>Download My Resume (PDF)</a></p>
+  </section>
+
+  <footer>
+    &copy; 2025 Sammy Campos
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      if (current === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    }
+
+    function toggleSkill(element) {
+      element.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
