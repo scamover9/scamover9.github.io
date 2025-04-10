@@ -43,6 +43,13 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .theme-toggle i {
+      font-size: 1.2rem;
     }
     section {
       background: var(--card-bg);
@@ -84,13 +91,15 @@
     }
   </style>
 </head>
-<body>
-  <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+<body data-theme="dark">
+  <button class="theme-toggle" onclick="toggleTheme()">
+    <i id="theme-icon" class="fas fa-moon"></i> Toggle Theme
+  </button>
 
   <header>
     <h1>Sammy Campos</h1>
     <p><a href="mailto:scamposrivera@icloud.com">scamposrivera@icloud.com</a> | 469-316-9307</p>
-    <p><a href="http://www.labscamover9.com" target="_blank" rel="noopener noreferrer" target="_blank">www.labscamover9.com</a></p>
+    <p><a href="http://www.labscamover9.com" target="_blank" rel="noopener noreferrer">www.labscamover9.com</a></p>
   </header>
 
   <section>
@@ -156,8 +165,8 @@
   <section>
     <h2>Connect with Me</h2>
     <div class="social-icons">
-      <a href="https://www.linkedin.com/in/scamover9" target="_blank" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
-      <a href="https://github.com/scamover9" target="_blank" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/scamover9" target="_blank" aria-label="LinkedIn" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/scamover9" target="_blank" aria-label="GitHub" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
     </div>
   </section>
 
@@ -172,15 +181,18 @@
 
   <script>
     function toggleTheme() {
-      const current = document.documentElement.getAttribute('data-theme');
-      if (current === 'dark') {
-        document.documentElement.removeAttribute('data-theme');
+      const root = document.documentElement;
+      const icon = document.getElementById('theme-icon');
+      const isDark = root.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        root.removeAttribute('data-theme');
+        icon.classList.replace('fa-moon', 'fa-sun');
       } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        root.setAttribute('data-theme', 'dark');
+        icon.classList.replace('fa-sun', 'fa-moon');
       }
     }
-
-    function toggleSkill(element) {
+  function toggleSkill(element) {
       element.classList.toggle('active');
     }
   </script>
