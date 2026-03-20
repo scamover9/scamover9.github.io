@@ -82,6 +82,10 @@
 .status-loading-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
 .status-skeleton { background: var(--card); border: 1px solid var(--border); border-radius: 9px; padding: 1rem 1.1rem; height: 58px; opacity: 0.5; animation: pulse 1.5s infinite; }
 .status-link { margin-top: 1.25rem; }
+.status-toggle-wrap { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.status-toggle-btn { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.07em; padding: 0.3rem 0.75rem; border-radius: 5px; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--text-dim); transition: all 0.2s; text-transform: uppercase; }
+.status-toggle-btn:hover { border-color: var(--blue-glow); color: var(--text); }
+.status-toggle-btn.active { background: rgba(37,99,196,0.15); border-color: rgba(59,130,246,0.4); color: var(--blue-glow); }
 
 /* ── LINKS ── */
 #links {}
@@ -229,6 +233,7 @@
         <div class="status-dot loading" id="overallDot"></div>
         <span class="status-overall-text" id="overallText">Fetching status...</span>
       </div>
+      <div class="status-toggle-wrap"><button class="status-toggle-btn active" id="toggleInstance1" onclick="switchInstance(0)">CasaOS — Primary</button><button class="status-toggle-btn" id="toggleInstance2" onclick="switchInstance(1)">CasaOS — Secondary</button></div>
       <span class="status-updated" id="statusUpdated"></span>
     </div>
 
@@ -248,11 +253,11 @@
     <!-- error state -->
     <div class="status-error" id="statusError" style="display:none">
       <p>Could not reach the status API. The homelab may be unreachable from your network.</p>
-      <a href="https://uptime.labscamover9.com/status/lab" target="_blank" rel="noopener" class="btn-g">Check Status Page Directly ↗</a>
+      <a href="https://uptime.labscamover9.com/status/lab" target="_blank" rel="noopener" class="btn-g" id="statusErrorLink">Check Status Page Directly ↗</a>
     </div>
 
     <div class="status-link">
-      <a href="https://uptime.labscamover9.com/status/lab" target="_blank" rel="noopener" class="btn-g">Open Full Status Page ↗</a>
+      <a href="https://uptime.labscamover9.com/status/lab" target="_blank" rel="noopener" class="btn-g" id="statusPageLink">Open Full Status Page ↗</a>
     </div>
   </section>
 
@@ -437,8 +442,47 @@
 <script src="site.js"></script>
 <script>
 // ── UPTIME KUMA STATUS WIDGET ──
-var STATUS_API = 'https://jelly.4042150scr.workers.dev/api/status-page/lab';
-var HEARTBEAT_API = 'https://jelly.4042150scr.workers.dev/api/status-page/heartbeat/lab';
+var INSTANCES = [
+  {
+    name:      'CasaOS — Primary',
+    slug:      'lab',
+    statusUrl: 'https://uptime.labscamover9.com/status/lab',
+    api:       'https://uptime.4042150scr.workers.dev/api/status-page/lab',
+    heartbeat: 'https://uptime.4042150scr.workers.dev/api/status-page/heartbeat/lab'
+  },
+  {
+    name:      'CasaOS — Secondary',
+    slug:      'homelab',
+    statusUrl: 'https://uptime2.labscamover9.com/status/homelab',
+    api:       'https://uptime.4042150scr.workers.dev/api/status-page/homelab',
+    heartbeat: 'https://uptime.4042150scr.workers.dev/api/status-page/heartbeat/homelab'
+  }
+];
+
+var activeInstance = 0;
+var refreshTimer   = null;
+
+function switchInstance(idx) {
+  if (idx === activeInstance) return;
+  activeInstance = idx;
+  document.getElementById('toggleInstance1').classList.toggle('active', idx === 0);
+  document.getElementById('toggleInstance2').classList.toggle('active', idx === 1);
+  // update full status page link
+  var link = document.getElementById('statusPageLink');
+  var errLink = document.getElementById('statusErrorLink');
+  if (link)    link.href = INSTANCES[idx].statusUrl;
+  if (errLink) errLink.href = INSTANCES[idx].statusUrl;
+  // reset and reload
+  document.getElementById('statusGrid').style.display    = 'none';
+  document.getElementById('statusError').style.display   = 'none';
+  document.getElementById('statusSkeleton').style.display = 'grid';
+  document.getElementById('overallDot').className  = 'status-dot loading';
+  document.getElementById('overallText').textContent = 'Fetching status...';
+  document.getElementById('statusUpdated').textContent = '';
+  clearInterval(refreshTimer);
+  fetchStatus();
+  refreshTimer = setInterval(fetchStatus, 60000);
+}
 
 function statusClass(val) {
   if (val === 1) return 'up';
@@ -475,7 +519,6 @@ function renderStatus(monitors, heartbeats) {
     var ping = last.ping ? last.ping + 'ms' : '—';
     if (st !== 1) allUp = false;
     if (st === 0) anyDown = true;
-
     html += '<div class="status-card">'
           + '<div class="status-card-dot ' + statusClass(st) + '"></div>'
           + '<div class="status-card-info">'
@@ -487,14 +530,12 @@ function renderStatus(monitors, heartbeats) {
   });
 
   grid.innerHTML = html;
-
-  var overall = allUp ? 'up' : (anyDown ? 'down' : 'partial');
+  var overall    = allUp ? 'up' : (anyDown ? 'down' : 'partial');
   var overallMsg = allUp ? 'All systems operational'
                  : anyDown ? 'Some services are down'
                  : 'Some services degraded';
-  dot.className  = 'status-dot ' + overall;
-  text.textContent = overallMsg;
-
+  dot.className      = 'status-dot ' + overall;
+  text.textContent   = overallMsg;
   var now = new Date();
   updated.textContent = 'Updated ' + now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
 }
@@ -508,16 +549,14 @@ function showError() {
 }
 
 function fetchStatus() {
-  // fetch monitors list and heartbeats in parallel
+  var inst = INSTANCES[activeInstance];
   Promise.all([
-    fetch(STATUS_API).then(function(r){ return r.json(); }),
-    fetch(HEARTBEAT_API).then(function(r){ return r.json(); })
+    fetch(inst.api).then(function(r){ return r.json(); }),
+    fetch(inst.heartbeat).then(function(r){ return r.json(); })
   ]).then(function(results) {
     var page       = results[0];
     var heartbeats = results[1].heartbeatList || {};
     var monitors   = [];
-
-    // publicGroupList contains monitor groups with monitorList inside
     if (page.publicGroupList) {
       page.publicGroupList.forEach(function(group) {
         if (group.monitorList) {
@@ -525,17 +564,13 @@ function fetchStatus() {
         }
       });
     }
-
     if (monitors.length === 0) { showError(); return; }
     renderStatus(monitors, heartbeats);
-  }).catch(function() {
-    showError();
-  });
+  }).catch(function() { showError(); });
 }
 
-// initial fetch + refresh every 60s
 fetchStatus();
-setInterval(fetchStatus, 60000);
+refreshTimer = setInterval(fetchStatus, 60000);
 </script>
 </body>
 </html>
