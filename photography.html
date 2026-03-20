@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Photography — labscamover9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+#hero-photo {
+  padding: 4rem 3.5rem 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.ph-pre  { font-family: 'Space Mono', monospace; font-size: 0.64rem; color: var(--blue-glow); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 0.8rem; animation: fu 0.5s 0.1s both; }
+.ph-title { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; line-height: 1.05; margin-bottom: 0.9rem; letter-spacing: -0.02em; animation: fu 0.5s 0.25s both; }
+.ph-title span { color: var(--blue-glow); font-weight: 500; }
+.ph-sub  { font-size: 0.86rem; color: var(--text-dim); max-width: 580px; line-height: 1.8; margin-bottom: 1.75rem; animation: fu 0.5s 0.4s both; }
+.ph-gear { display: flex; gap: 0.5rem; flex-wrap: wrap; animation: fu 0.5s 0.55s both; }
+.gear-tag { font-family: 'Space Mono', monospace; font-size: 0.56rem; padding: 0.2rem 0.55rem; border-radius: 4px; background: rgba(37,99,196,0.1); color: var(--blue-glow); border: 1px solid rgba(59,130,246,0.2); letter-spacing: 0.05em; }
+
+/* piwigo note */
+.piwigo-banner {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.4rem 1.6rem; display: flex; align-items: center; gap: 1.2rem;
+  margin-bottom: 2.5rem; flex-wrap: wrap;
+}
+.piwigo-banner-icon { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--blue-glow); background: rgba(37,99,196,0.12); border: 1px solid rgba(59,130,246,0.2); border-radius: 6px; padding: 0.4rem 0.65rem; flex-shrink: 0; }
+.piwigo-banner-text { flex: 1; font-size: 0.82rem; color: var(--text-dim); line-height: 1.7; }
+.piwigo-banner-text strong { color: var(--text); font-weight: 500; }
+
+/* album grid */
+.album-section { margin-bottom: 3.5rem; }
+.album-section-title {
+  font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--blue-glow);
+  letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem;
+  padding-bottom: 0.45rem; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.album-section-title::after { content: ''; flex: 1; height: 1px; background: transparent; }
+.album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+
+.album-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden; text-decoration: none; color: var(--text); transition: all 0.25s;
+  display: flex; flex-direction: column;
+}
+.album-card:hover { border-color: rgba(59,130,246,0.28); transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.12); }
+.album-thumb {
+  height: 170px; background: var(--bg3); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
+}
+.album-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+.album-card:hover .album-thumb img { transform: scale(1.05); }
+.album-placeholder { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0.3; }
+.album-placeholder svg { width: 30px; height: 30px; stroke: var(--blue-glow); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.album-placeholder span { font-family: 'Space Mono', monospace; font-size: 0.56rem; color: var(--text-dim); letter-spacing: 0.06em; }
+.album-status {
+  position: absolute; top: 0.5rem; right: 0.55rem;
+  font-family: 'Space Mono', monospace; font-size: 0.5rem;
+  padding: 0.14rem 0.4rem; border-radius: 3px; letter-spacing: 0.06em;
+}
+.album-status.live { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+.album-status.soon { background: rgba(30,77,155,0.15); color: var(--blue-glow); border: 1px solid rgba(59,130,246,0.2); }
+.album-body { padding: 1rem 1.1rem; flex: 1; }
+.album-name { font-size: 0.9rem; font-weight: 500; color: var(--text); margin-bottom: 0.18rem; }
+.album-meta { font-family: 'Space Mono', monospace; font-size: 0.56rem; color: var(--text-dim); letter-spacing: 0.04em; }
+.album-count { font-size: 0.7rem; color: var(--blue-glow); margin-top: 0.3rem; }
+
+/* full gallery link */
+.gallery-cta {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 2rem; text-align: center; margin-top: 1rem;
+}
+.gallery-cta p { font-size: 0.84rem; color: var(--text-dim); margin-bottom: 1.25rem; line-height: 1.7; }
+
+@media (max-width: 768px) {
+  #hero-photo { padding: 3rem 1.35rem 2.5rem; }
+  .album-grid { grid-template-columns: 1fr 1fr; }
+  .piwigo-banner { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+  .album-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<script>(function(){ document.documentElement.dataset.theme = localStorage.getItem('lab-theme') || 'dark'; })();</script>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="topbar-logo">labscamover9.com</a>
+    <nav class="topbar-nav">
+      <a href="index.html">Home</a>
+      <a href="links.html">Links</a>
+      <a href="photography.html" class="active">Photography</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+  <div class="topbar-right">
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-glow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11">
+        <path id="themeIconPath" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+      </svg>
+      <span id="themeLabel">Light</span>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="links.html">Links</a>
+  <a href="photography.html" class="active">Photography</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<div class="page">
+
+  <!-- PAGE HEADER -->
+  <div id="hero-photo">
+    <div class="ph-pre">// self-hosted · film lenses · manual focus</div>
+    <h1 class="ph-title">Photo <span>Albums</span></h1>
+    <p class="ph-sub">Photography shot on manual lenses. Organized by subject and date, hosted on a self-managed Piwigo gallery at photos.labscamover9.com. New albums added as rolls get processed.</p>
+    <div class="ph-gear">
+      <span class="gear-tag">MC Rokkor-X 50mm f/1.4</span>
+      <span class="gear-tag">Vivitar Series 1 70-210mm</span>
+      <span class="gear-tag">Piwigo — Self-Hosted</span>
+    </div>
+  </div>
+
+  <section style="border-bottom:none">
+
+    <!-- Piwigo setup note -->
+    <div class="piwigo-banner fade-item">
+      <span class="piwigo-banner-icon">// PIWIGO</span>
+      <p class="piwigo-banner-text">
+        Full gallery is hosted at <strong>photos.labscamover9.com</strong> powered by Piwigo.
+        Albums below link directly to individual Piwigo albums.
+        Once Piwigo is set up, replace the placeholder links with your actual album URLs.
+      </p>
+      <a href="https://photos.labscamover9.com" target="_blank" rel="noopener" class="btn-p">Open Gallery ↗</a>
+    </div>
+
+    <!-- Wildlife / Nature -->
+    <div class="album-section">
+      <div class="album-section-title">Wildlife &amp; Nature</div>
+      <div class="album-grid">
+        <a href="https://photos.labscamover9.com/index.php?/category/ducks" target="_blank" rel="noopener" class="album-card fade-item">
+          <div class="album-thumb">
+            <div class="album-placeholder">
+              <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              <span>Add cover photo</span>
+            </div>
+            <span class="album-status soon">Coming Soon</span>
+          </div>
+          <div class="album-body">
+            <div class="album-name">Ducks at the Pond</div>
+            <div class="album-meta">Rokkor-X 50mm · Wildlife</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Automotive -->
+    <div class="album-section">
+      <div class="album-section-title">Automotive</div>
+      <div class="album-grid">
+        <a href="https://photos.labscamover9.com/index.php?/category/cars" target="_blank" rel="noopener" class="album-card fade-item">
+          <div class="album-thumb">
+            <div class="album-placeholder">
+              <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              <span>Add cover photo</span>
+            </div>
+            <span class="album-status soon">Coming Soon</span>
+          </div>
+          <div class="album-body">
+            <div class="album-name">Cars</div>
+            <div class="album-meta">Vivitar 70-210mm · Automotive</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Astrophotography -->
+    <div class="album-section">
+      <div class="album-section-title">Astrophotography</div>
+      <div class="album-grid">
+        <a href="https://photos.labscamover9.com/index.php?/category/lunar-eclipse" target="_blank" rel="noopener" class="album-card fade-item">
+          <div class="album-thumb">
+            <div class="album-placeholder">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              <span>Add cover photo</span>
+            </div>
+            <span class="album-status soon">Coming Soon</span>
+          </div>
+          <div class="album-body">
+            <div class="album-name">Lunar Eclipse</div>
+            <div class="album-meta">Vivitar 70-210mm · Astrophotography</div>
+          </div>
+        </a>
+        <a href="https://photos.labscamover9.com/index.php?/category/aurora" target="_blank" rel="noopener" class="album-card fade-item">
+          <div class="album-thumb">
+            <div class="album-placeholder">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              <span>Add cover photo</span>
+            </div>
+            <span class="album-status soon">Coming Soon</span>
+          </div>
+          <div class="album-body">
+            <div class="album-name">Aurora Borealis</div>
+            <div class="album-meta">Wide · Night sky</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Full gallery CTA -->
+    <div class="gallery-cta fade-item">
+      <p>All albums live in Piwigo at <strong style="color:var(--text)">photos.labscamover9.com</strong>. New albums are added as photos get processed and organized. The gallery supports full-res viewing, date-based browsing, and category filtering.</p>
+      <a href="https://photos.labscamover9.com" target="_blank" rel="noopener" class="btn-p">Open Full Gallery ↗</a>
+    </div>
+
+  </section>
+
+</div><!-- end .page -->
+
+<footer>
+  <span class="footer-copy">// labscamover9.com · Sammy Campos Rivera · 2025</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="https://scamover9.com" target="_blank" rel="noopener">Portfolio</a>
+    <a href="https://noc.labscamover9.com" target="_blank" rel="noopener">NOC</a>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>

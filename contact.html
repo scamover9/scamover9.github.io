@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Contact — labscamover9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+#contact-page { min-height: calc(100vh - 54px); display:flex; flex-direction:column; justify-content:center; padding: 4rem 3.5rem; border-bottom:none; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 0.5rem; }
+.contact-lead { font-size: 0.88rem; color: var(--text-dim); line-height: 1.85; margin-bottom: 2rem; max-width: 440px; }
+.clinks { display: flex; flex-direction: column; gap: 0.55rem; }
+.clink { display:flex; align-items:center; gap:0.85rem; padding:0.8rem 0.95rem; background:var(--card); border:1px solid var(--border); border-radius:8px; text-decoration:none; color:var(--text-mid); font-size:0.78rem; transition:all 0.2s; }
+.clink:hover { border-color:rgba(59,130,246,0.28); color:var(--text); background:rgba(37,99,196,0.06); }
+.cico { font-family:'Space Mono',monospace; font-size:0.54rem; color:var(--blue-glow); width:52px; flex-shrink:0; }
+@media (max-width:768px) { #contact-page{padding:3.25rem 1.35rem;min-height:auto;} .contact-grid{grid-template-columns:1fr;gap:2rem;} }
+</style>
+</head>
+<body>
+<script>(function(){ document.documentElement.dataset.theme = localStorage.getItem('lab-theme') || 'dark'; })();</script>
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="topbar-logo">labscamover9.com</a>
+    <nav class="topbar-nav">
+      <a href="index.html">Home</a>
+      <a href="links.html">Links</a>
+      <a href="photography.html">Photography</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+  </div>
+  <div class="topbar-right">
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-glow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path id="themeIconPath" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+      <span id="themeLabel">Light</span>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="links.html">Links</a>
+  <a href="photography.html">Photography</a>
+  <a href="contact.html" class="active">Contact</a>
+</nav>
+<div class="page">
+  <section id="contact-page">
+    <div class="slabel">// get in touch</div>
+    <h1 class="stitle" style="margin-bottom:0.5rem">Contact</h1>
+    <div class="contact-grid">
+      <div class="fade-item">
+        <p class="contact-lead">Questions about the homelab, a project, photography, or just want to talk tech? Reach out via any of the channels below. Currently open to IT and cybersecurity opportunities in the DFW area.</p>
+        <a href="mailto:scamposrivera@icloud.com" class="btn-p">Send an Email</a>
+      </div>
+      <div class="clinks fade-item">
+        <a href="mailto:scamposrivera@icloud.com" class="clink"><span class="cico">EMAIL</span>scamposrivera@icloud.com</a>
+        <a href="https://linkedin.com/in/scamover9" target="_blank" rel="noopener" class="clink"><span class="cico">LINKEDIN</span>linkedin.com/in/scamover9</a>
+        <a href="https://scamover9.com" target="_blank" rel="noopener" class="clink"><span class="cico">PORTFOLIO</span>scamover9.com</a>
+        <a href="https://github.com/scamover9" target="_blank" rel="noopener" class="clink"><span class="cico">GITHUB</span>github.com/scamover9</a>
+      </div>
+    </div>
+  </section>
+</div>
+<footer>
+  <span class="footer-copy">// labscamover9.com · Sammy Campos Rivera · 2025</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="https://scamover9.com" target="_blank" rel="noopener">Portfolio</a>
+    <a href="https://noc.labscamover9.com" target="_blank" rel="noopener">NOC</a>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

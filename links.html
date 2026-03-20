@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Links — labscamover9</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.links-hero { padding: 4rem 3.5rem 3rem; border-bottom: 1px solid var(--border); }
+.links-hero h1 { font-size: clamp(2rem,4vw,3rem); font-weight: 300; letter-spacing:-0.02em; animation: fu 0.5s 0.1s both; }
+.links-hero h1 span { color: var(--blue-glow); font-weight: 500; }
+.links-hero p { font-size: 0.86rem; color: var(--text-dim); max-width: 540px; line-height: 1.8; margin-top: 0.75rem; animation: fu 0.5s 0.25s both; }
+.links-section { padding: 3rem 3.5rem; border-bottom: 1px solid var(--border); }
+.links-section:last-child { border-bottom: none; }
+.links-section-label { font-family: 'Space Mono', monospace; font-size: 0.56rem; color: var(--blue-glow); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+.links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 0.85rem; }
+.link-card { background: var(--card); border: 1px solid var(--border); border-radius: 9px; padding: 1.15rem; text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 0.8rem; transition: all 0.2s; position: relative; overflow: hidden; }
+.link-card::after { content: ''; position: absolute; bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue-mid),var(--blue-glow));transform:scaleX(0);transform-origin:left;transition:transform 0.25s; }
+.link-card:hover { border-color: rgba(59,130,246,0.28); transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.1); }
+.link-card:hover::after { transform: scaleX(1); }
+.link-icon { width: 34px; height: 34px; border-radius: 7px; background: rgba(37,99,196,0.12); border: 1px solid rgba(59,130,246,0.18); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--blue-glow); }
+.link-name { font-size: 0.86rem; font-weight: 500; color: var(--text); margin-bottom: 0.08rem; }
+.link-desc { font-size: 0.68rem; color: var(--text-dim); }
+.link-arrow { margin-left: auto; font-size: 0.68rem; color: var(--text-dim); flex-shrink:0; transition: color 0.2s; }
+.link-card:hover .link-arrow { color: var(--blue-glow); }
+@media (max-width:768px) { .links-hero,.links-section{padding-left:1.35rem;padding-right:1.35rem;} }
+</style>
+</head>
+<body>
+<script>(function(){ document.documentElement.dataset.theme = localStorage.getItem('lab-theme') || 'dark'; })();</script>
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="topbar-logo">labscamover9.com</a>
+    <nav class="topbar-nav">
+      <a href="index.html">Home</a>
+      <a href="links.html" class="active">Links</a>
+      <a href="photography.html">Photography</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+  <div class="topbar-right">
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue-glow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><path id="themeIconPath" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+      <span id="themeLabel">Light</span>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="links.html" class="active">Links</a>
+  <a href="photography.html">Photography</a>
+  <a href="contact.html">Contact</a>
+</nav>
+<div class="page">
+  <div class="links-hero">
+    <h1>Services &amp; <span>Links</span></h1>
+    <p>All active self-hosted services running on the homelab. Requires being on the local network or connected via Tailscale/VPN for most services.</p>
+  </div>
+  <div class="links-section">
+    <div class="links-section-label">Media &amp; Content</div>
+    <div class="links-grid">
+      <a href="https://jelly.labscamover9.com" target="_blank" rel="noopener" class="link-card fade-item"><div class="link-icon">JF</div><div><div class="link-name">Jellyfin</div><div class="link-desc">Media server — movies, TV, music</div></div><span class="link-arrow">↗</span></a>
+      <a href="https://library.labscamover9.com" target="_blank" rel="noopener" class="link-card fade-item"><div class="link-icon">KV</div><div><div class="link-name">Kavita</div><div class="link-desc">Books, manga, comics</div></div><span class="link-arrow">↗</span></a>
+      <a href="photography.html" class="link-card fade-item"><div class="link-icon">PH</div><div><div class="link-name">Photography</div><div class="link-desc">Photo albums via Piwigo</div></div><span class="link-arrow">→</span></a>
+    </div>
+  </div>
+  <div class="links-section">
+    <div class="links-section-label">Infrastructure &amp; Monitoring</div>
+    <div class="links-grid">
+      <a href="https://uptime.labscamover9.com" target="_blank" rel="noopener" class="link-card fade-item"><div class="link-icon">UK</div><div><div class="link-name">Uptime Kuma</div><div class="link-desc">Service status &amp; monitoring</div></div><span class="link-arrow">↗</span></a>
+      <a href="https://noc.labscamover9.com" target="_blank" rel="noopener" class="link-card fade-item"><div class="link-icon">GF</div><div><div class="link-name">Grafana NOC</div><div class="link-desc">Infrastructure dashboards</div></div><span class="link-arrow">↗</span></a>
+    </div>
+  </div>
+  <div class="links-section">
+    <div class="links-section-label">Security &amp; Utilities</div>
+    <div class="links-grid">
+      <a href="https://vault.labscamover9.com" target="_blank" rel="noopener" class="link-card fade-item"><div class="link-icon">VW</div><div><div class="link-name">Vaultwarden</div><div class="link-desc">Self-hosted password manager</div></div><span class="link-arrow">↗</span></a>
+      <a href="https://mail.labscamover9.com" target="_blank" rel="noopener" class="link-card fade-item"><div class="link-icon">ML</div><div><div class="link-name">Mail</div><div class="link-desc">Self-hosted email client</div></div><span class="link-arrow">↗</span></a>
+    </div>
+  </div>
+  <div class="links-section">
+    <div class="links-section-label">External</div>
+    <div class="links-grid">
+      <a href="https://github.com/scamover9/scamover9.github.io" target="_blank" rel="noopener" class="link-card fade-item"><div class="link-icon">GH</div><div><div class="link-name">Site Repo</div><div class="link-desc">GitHub — site source code</div></div><span class="link-arrow">↗</span></a>
+      <a href="https://scamover9.com" target="_blank" rel="noopener" class="link-card fade-item"><div class="link-icon">SC</div><div><div class="link-name">Portfolio</div><div class="link-desc">scamover9.com</div></div><span class="link-arrow">↗</span></a>
+    </div>
+  </div>
+</div>
+<footer>
+  <span class="footer-copy">// labscamover9.com · Sammy Campos Rivera · 2025</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="https://scamover9.com" target="_blank" rel="noopener">Portfolio</a>
+    <a href="https://noc.labscamover9.com" target="_blank" rel="noopener">NOC</a>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

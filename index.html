@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>labscamover9 — Homelab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ── HERO ── */
+#hero {
+  min-height: calc(100vh - 54px);
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+#hero::before {
+  content: ''; position: absolute; top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(37,99,196,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.h-pre  { font-family: 'Space Mono', monospace; font-size: 0.66rem; color: var(--blue-glow); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 0.9rem; animation: fu 0.5s 0.1s both; }
+.h-name { font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 300; line-height: 1.05; margin-bottom: 0.6rem; letter-spacing: -0.02em; animation: fu 0.5s 0.25s both; }
+.h-name span { color: var(--blue-glow); font-weight: 500; }
+.h-sub  { font-family: 'Space Mono', monospace; font-size: 0.82rem; color: var(--text-mid); margin-bottom: 1.5rem; animation: fu 0.5s 0.4s both; }
+.h-bio  { max-width: 580px; font-size: 0.88rem; line-height: 1.85; color: var(--text-dim); margin-bottom: 2.25rem; animation: fu 0.5s 0.55s both; }
+.h-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; animation: fu 0.5s 0.7s both; }
+.h-stats {
+  display: flex; gap: 0; margin-top: 3.5rem;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+  animation: fu 0.5s 0.85s both; flex-wrap: wrap;
+}
+.h-stat {
+  flex: 1; min-width: 120px; padding: 1.1rem 1.5rem;
+  background: var(--card); border-right: 1px solid var(--border);
+  text-align: center;
+}
+.h-stat:last-child { border-right: none; }
+.h-stat-num { font-family: 'Space Mono', monospace; font-size: 1.55rem; font-weight: 700; color: var(--blue-glow); line-height: 1; display: block; }
+.h-stat-lbl { font-size: 0.62rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem; display: block; }
+
+/* ── STATUS ── */
+#status {}
+.status-intro { font-size: 0.86rem; color: var(--text-dim); max-width: 600px; margin-bottom: 2rem; line-height: 1.75; }
+.status-embed-wrap {
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  background: var(--card); position: relative;
+}
+.status-embed-wrap iframe {
+  width: 100%; border: none; display: block;
+  min-height: 400px; background: transparent;
+}
+.status-embed-label {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.75rem 1.1rem; border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); animation: pulse 2.5s infinite; flex-shrink: 0; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.status-embed-title { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--text-mid); letter-spacing: 0.08em; }
+.status-link { margin-top: 1rem; }
+
+/* ── LINKS ── */
+#links {}
+.links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.9rem; }
+.link-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 9px;
+  padding: 1.2rem; text-decoration: none; color: var(--text);
+  display: flex; align-items: center; gap: 0.85rem;
+  transition: all 0.2s; position: relative; overflow: hidden;
+}
+.link-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue-mid), var(--blue-glow)); transform: scaleX(0); transform-origin: left; transition: transform 0.25s; }
+.link-card:hover { border-color: rgba(59,130,246,0.28); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.link-card:hover::after { transform: scaleX(1); }
+.link-icon { width: 36px; height: 36px; border-radius: 7px; background: rgba(37,99,196,0.12); border: 1px solid rgba(59,130,246,0.18); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--blue-glow); letter-spacing: 0.04em; }
+.link-info {}
+.link-name { font-size: 0.88rem; font-weight: 500; color: var(--text); margin-bottom: 0.1rem; }
+.link-desc { font-size: 0.7rem; color: var(--text-dim); }
+.link-arrow { margin-left: auto; font-size: 0.7rem; color: var(--text-dim); flex-shrink: 0; transition: color 0.2s; }
+.link-card:hover .link-arrow { color: var(--blue-glow); }
+
+/* ── PHOTOGRAPHY ── */
+#photography {}
+.photo-intro { font-size: 0.86rem; color: var(--text-dim); max-width: 600px; margin-bottom: 2rem; line-height: 1.75; }
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+.photo-album {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden; text-decoration: none; color: var(--text); transition: all 0.25s;
+  display: flex; flex-direction: column;
+}
+.photo-album:hover { border-color: rgba(59,130,246,0.28); transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.12); }
+.photo-album-thumb {
+  height: 160px; background: var(--bg3); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
+}
+.photo-album-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+.photo-album:hover .photo-album-thumb img { transform: scale(1.05); }
+.photo-album-placeholder { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0.35; }
+.photo-album-placeholder svg { width: 28px; height: 28px; stroke: var(--blue-glow); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.photo-album-placeholder span { font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--text-dim); }
+.photo-album-body { padding: 1.1rem; flex: 1; }
+.photo-album-name { font-size: 0.9rem; font-weight: 500; color: var(--text); margin-bottom: 0.2rem; }
+.photo-album-meta { font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--blue-glow); letter-spacing: 0.06em; }
+.photo-cta { margin-top: 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+.photo-note { font-size: 0.76rem; color: var(--text-dim); font-style: italic; }
+
+/* ── SHOUTOUTS ── */
+#shoutouts {}
+.shout-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+.shout-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 1.5rem; transition: all 0.2s; position: relative; overflow: hidden;
+}
+.shout-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--blue-mid); transition: background 0.2s; }
+.shout-card:hover { border-color: rgba(59,130,246,0.28); }
+.shout-card:hover::before { background: var(--blue-glow); }
+.shout-name { font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
+.shout-text { font-size: 0.78rem; line-height: 1.8; color: var(--text-dim); }
+
+@media (max-width: 768px) {
+  #hero { min-height: auto; padding-top: 3.5rem; padding-bottom: 3.5rem; }
+  .h-ctas { flex-direction: column; }
+  .btn-p, .btn-g { text-align: center; }
+  .h-stats { flex-direction: column; }
+  .h-stat { border-right: none; border-bottom: 1px solid var(--border); }
+  .h-stat:last-child { border-bottom: none; }
+}
+</style>
+</head>
+<body>
+<script>(function(){ document.documentElement.dataset.theme = localStorage.getItem('lab-theme') || 'dark'; })();</script>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="topbar-logo">labscamover9.com</a>
+    <nav class="topbar-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="links.html">Links</a>
+      <a href="photography.html">Photography</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+  <div class="topbar-right">
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+      <svg id="themeIconSvg" viewBox="0 0 24 24" fill="none" stroke="var(--blue-glow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path id="themeIconPath" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+      </svg>
+      <span id="themeLabel">Light</span>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html" class="active">Home</a>
+  <a href="links.html">Links</a>
+  <a href="photography.html">Photography</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="h-pre">// homelab · self-hosted · always learning</div>
+    <h1 class="h-name"><span>labscamover9</span>.com</h1>
+    <div class="h-sub">Personal homelab — built, broken, and rebuilt.</div>
+    <p class="h-bio">A self-hosted infrastructure project running a 3-node Proxmox cluster, TrueNAS storage, Docker-based services, and a full monitoring stack. Started as a school project, now a production-grade learning environment for cybersecurity, networking, and systems administration.</p>
+    <div class="h-ctas">
+      <a href="#status" class="btn-p">Service Status</a>
+      <a href="links.html" class="btn-g">All Services</a>
+      <a href="https://noc.labscamover9.com" target="_blank" rel="noopener" class="btn-g">NOC / Grafana ↗</a>
+    </div>
+    <div class="h-stats">
+      <div class="h-stat">
+        <span class="h-stat-num">3</span>
+        <span class="h-stat-lbl">Proxmox Nodes</span>
+      </div>
+      <div class="h-stat">
+        <span class="h-stat-num">10+</span>
+        <span class="h-stat-lbl">Self-Hosted Services</span>
+      </div>
+      <div class="h-stat">
+        <span class="h-stat-num">7.74</span>
+        <span class="h-stat-lbl">TB Storage</span>
+      </div>
+      <div class="h-stat">
+        <span class="h-stat-num">24/7</span>
+        <span class="h-stat-lbl">Uptime Monitored</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUS -->
+  <section id="status">
+    <div class="slabel">// service status</div>
+    <h2 class="stitle">Live Status</h2>
+    <p class="status-intro">Real-time service health pulled directly from Uptime Kuma. All services are self-hosted on the homelab cluster and monitored 24/7.</p>
+    <div class="status-embed-wrap fade-item">
+      <div class="status-embed-label">
+        <div class="status-dot"></div>
+        <span class="status-embed-title">uptime.labscamover9.com — live status feed</span>
+      </div>
+      <!-- Replace the src with your actual Uptime Kuma public status page embed URL -->
+      <!-- In Uptime Kuma: Settings > Status Pages > your page > "Embed" to get the iframe src -->
+      <iframe
+        src="https://uptime.labscamover9.com/status/main"
+        title="Service Status"
+        loading="lazy"
+        allow="none"
+        sandbox="allow-scripts allow-same-origin">
+      </iframe>
+    </div>
+    <div class="status-link">
+      <a href="https://uptime.labscamover9.com" target="_blank" rel="noopener" class="btn-g">Open Full Status Page ↗</a>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section id="links">
+    <div class="slabel">// services</div>
+    <h2 class="stitle">Services &amp; Links</h2>
+    <div class="links-grid">
+
+      <a href="https://jelly.labscamover9.com" target="_blank" rel="noopener" class="link-card fade-item">
+        <div class="link-icon">JF</div>
+        <div class="link-info">
+          <div class="link-name">Jellyfin</div>
+          <div class="link-desc">Media server</div>
+        </div>
+        <span class="link-arrow">↗</span>
+      </a>
+
+      <a href="https://library.labscamover9.com" target="_blank" rel="noopener" class="link-card fade-item">
+        <div class="link-icon">KV</div>
+        <div class="link-info">
+          <div class="link-name">Kavita</div>
+          <div class="link-desc">Books &amp; manga</div>
+        </div>
+        <span class="link-arrow">↗</span>
+      </a>
+
+      <a href="https://vault.labscamover9.com" target="_blank" rel="noopener" class="link-card fade-item">
+        <div class="link-icon">VW</div>
+        <div class="link-info">
+          <div class="link-name">Vaultwarden</div>
+          <div class="link-desc">Password manager</div>
+        </div>
+        <span class="link-arrow">↗</span>
+      </a>
+
+      <a href="https://uptime.labscamover9.com" target="_blank" rel="noopener" class="link-card fade-item">
+        <div class="link-icon">UK</div>
+        <div class="link-info">
+          <div class="link-name">Uptime Kuma</div>
+          <div class="link-desc">Service monitoring</div>
+        </div>
+        <span class="link-arrow">↗</span>
+      </a>
+
+      <a href="https://mail.labscamover9.com" target="_blank" rel="noopener" class="link-card fade-item">
+        <div class="link-icon">ML</div>
+        <div class="link-info">
+          <div class="link-name">Mail</div>
+          <div class="link-desc">Self-hosted email</div>
+        </div>
+        <span class="link-arrow">↗</span>
+      </a>
+
+      <a href="https://github.com/scamover9/scamover9.github.io" target="_blank" rel="noopener" class="link-card fade-item">
+        <div class="link-icon">GH</div>
+        <div class="link-info">
+          <div class="link-name">Site Repo</div>
+          <div class="link-desc">GitHub source</div>
+        </div>
+        <span class="link-arrow">↗</span>
+      </a>
+
+      <a href="https://noc.labscamover9.com" target="_blank" rel="noopener" class="link-card fade-item">
+        <div class="link-icon">GF</div>
+        <div class="link-info">
+          <div class="link-name">Grafana NOC</div>
+          <div class="link-desc">Infrastructure dashboards</div>
+        </div>
+        <span class="link-arrow">↗</span>
+      </a>
+
+      <a href="photography.html" class="link-card fade-item">
+        <div class="link-icon">PH</div>
+        <div class="link-info">
+          <div class="link-name">Photography</div>
+          <div class="link-desc">Photo albums &amp; gallery</div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- PHOTOGRAPHY PREVIEW -->
+  <section id="photography">
+    <div class="slabel">// photography</div>
+    <h2 class="stitle">Photography</h2>
+    <p class="photo-intro">Shot with a Minolta MC Rokkor-X 50mm and Vivitar Series 1 70-210mm. Albums are self-hosted on Piwigo and organized by subject and date. Subjects include ducks at the pond, cars, lunar eclipses, and the aurora borealis.</p>
+    <div class="photo-grid">
+
+      <a href="photography.html" class="photo-album fade-item">
+        <div class="photo-album-thumb">
+          <div class="photo-album-placeholder">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            <span>Coming soon</span>
+          </div>
+        </div>
+        <div class="photo-album-body">
+          <div class="photo-album-name">Ducks at the Pond</div>
+          <div class="photo-album-meta">Rokkor-X 50mm · Wildlife</div>
+        </div>
+      </a>
+
+      <a href="photography.html" class="photo-album fade-item">
+        <div class="photo-album-thumb">
+          <div class="photo-album-placeholder">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            <span>Coming soon</span>
+          </div>
+        </div>
+        <div class="photo-album-body">
+          <div class="photo-album-name">Cars</div>
+          <div class="photo-album-meta">Vivitar 70-210mm · Automotive</div>
+        </div>
+      </a>
+
+      <a href="photography.html" class="photo-album fade-item">
+        <div class="photo-album-thumb">
+          <div class="photo-album-placeholder">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            <span>Coming soon</span>
+          </div>
+        </div>
+        <div class="photo-album-body">
+          <div class="photo-album-name">Lunar Eclipse</div>
+          <div class="photo-album-meta">Vivitar 70-210mm · Astrophotography</div>
+        </div>
+      </a>
+
+      <a href="photography.html" class="photo-album fade-item">
+        <div class="photo-album-thumb">
+          <div class="photo-album-placeholder">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            <span>Coming soon</span>
+          </div>
+        </div>
+        <div class="photo-album-body">
+          <div class="photo-album-name">Aurora Borealis</div>
+          <div class="photo-album-meta">Wide · Night sky</div>
+        </div>
+      </a>
+
+    </div>
+    <div class="photo-cta">
+      <a href="photography.html" class="btn-p">View All Albums</a>
+      <span class="photo-note">Full gallery powered by Piwigo — self-hosted at photos.labscamover9.com</span>
+    </div>
+  </section>
+
+  <!-- SHOUTOUTS -->
+  <section id="shoutouts">
+    <div class="slabel">// people</div>
+    <h2 class="stitle">Shoutouts</h2>
+    <div class="shout-grid">
+      <div class="shout-card fade-item">
+        <div class="shout-name">Christopher Simms</div>
+        <div class="shout-text">A major help during cybersecurity coursework and a big reason for why cybersecurity became the career path. Grateful for the guidance.</div>
+      </div>
+      <div class="shout-card fade-item">
+        <div class="shout-name">Richard Simms</div>
+        <div class="shout-text">Taught HTML, CSS, and Python — tools that became foundational to everything built here. The site you're reading wouldn't exist without that foundation.</div>
+      </div>
+      <div class="shout-card fade-item">
+        <div class="shout-name">Wayne Levan</div>
+        <div class="shout-text">Helped build stronger problem-solving skills and gave the opportunity to lead a solid, hard-working team. That experience shaped how I approach every project.</div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end .page -->
+
+<footer>
+  <span class="footer-copy">// labscamover9.com · Sammy Campos Rivera · 2025</span>
+  <div class="footer-links">
+    <a href="https://scamover9.com" target="_blank" rel="noopener">Portfolio</a>
+    <a href="https://linkedin.com/in/scamover9" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://noc.labscamover9.com" target="_blank" rel="noopener">NOC</a>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
