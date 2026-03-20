@@ -40,26 +40,48 @@
 .h-stat-num { font-family: 'Space Mono', monospace; font-size: 1.55rem; font-weight: 700; color: var(--blue-glow); line-height: 1; display: block; }
 .h-stat-lbl { font-size: 0.62rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem; display: block; }
 
-/* ── STATUS ── */
-#status {}
+/* ── STATUS WIDGET ── */
 .status-intro { font-size: 0.86rem; color: var(--text-dim); max-width: 600px; margin-bottom: 2rem; line-height: 1.75; }
-.status-embed-wrap {
-  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
-  background: var(--card); position: relative;
+.status-header {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;
 }
-.status-embed-wrap iframe {
-  width: 100%; border: none; display: block;
-  min-height: 400px; background: transparent;
+.status-overall {
+  display: flex; align-items: center; gap: 0.65rem;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.65rem 1rem;
 }
-.status-embed-label {
-  display: flex; align-items: center; gap: 0.6rem;
-  padding: 0.75rem 1.1rem; border-bottom: 1px solid var(--border);
-  background: var(--bg2);
+.status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.status-dot.up      { background: var(--green); box-shadow: 0 0 7px var(--green); }
+.status-dot.partial { background: var(--yellow); box-shadow: 0 0 7px var(--yellow); }
+.status-dot.down    { background: var(--red);   box-shadow: 0 0 7px var(--red); }
+.status-dot.loading { background: var(--text-dim); animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+.status-overall-text { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--text-mid); letter-spacing: 0.06em; }
+.status-updated { font-family: 'Space Mono', monospace; font-size: 0.56rem; color: var(--text-dim); letter-spacing: 0.05em; }
+
+.status-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
+.status-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 9px;
+  padding: 1rem 1.1rem; display: flex; align-items: center; gap: 0.85rem;
+  transition: border-color 0.2s;
 }
-.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); animation: pulse 2.5s infinite; flex-shrink: 0; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-.status-embed-title { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--text-mid); letter-spacing: 0.08em; }
-.status-link { margin-top: 1rem; }
+.status-card:hover { border-color: rgba(59,130,246,0.2); }
+.status-card-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.status-card-dot.up      { background: var(--green); box-shadow: 0 0 5px var(--green); }
+.status-card-dot.partial { background: var(--yellow); box-shadow: 0 0 5px var(--yellow); }
+.status-card-dot.down    { background: var(--red);   box-shadow: 0 0 5px var(--red); }
+.status-card-dot.loading { background: var(--text-dim); animation: pulse 1.5s infinite; }
+.status-card-info { flex: 1; min-width: 0; }
+.status-card-name { font-size: 0.84rem; font-weight: 500; color: var(--text); margin-bottom: 0.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.status-card-meta { font-family: 'Space Mono', monospace; font-size: 0.56rem; color: var(--text-dim); letter-spacing: 0.04em; }
+.status-card-ping { font-family: 'Space Mono', monospace; font-size: 0.58rem; color: var(--blue-glow); margin-left: auto; flex-shrink: 0; }
+
+.status-error { background: var(--card); border: 1px solid var(--border); border-radius: 9px; padding: 1.5rem; text-align: center; }
+.status-error p { font-size: 0.82rem; color: var(--text-dim); margin-bottom: 0.75rem; }
+.status-loading-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem; }
+.status-skeleton { background: var(--card); border: 1px solid var(--border); border-radius: 9px; padding: 1rem 1.1rem; height: 58px; opacity: 0.5; animation: pulse 1.5s infinite; }
+.status-link { margin-top: 1.25rem; }
 
 /* ── LINKS ── */
 #links {}
@@ -200,22 +222,35 @@
   <section id="status">
     <div class="slabel">// service status</div>
     <h2 class="stitle">Live Status</h2>
-    <p class="status-intro">Real-time service health pulled directly from Uptime Kuma. All services are self-hosted on the homelab cluster and monitored 24/7.</p>
-    <div class="status-embed-wrap fade-item">
-      <div class="status-embed-label">
-        <div class="status-dot"></div>
-        <span class="status-embed-title">uptime.labscamover9.com — live status feed</span>
+    <p class="status-intro">Real-time service health pulled directly from Uptime Kuma via API. Updates every 60 seconds.</p>
+
+    <div class="status-header">
+      <div class="status-overall" id="statusOverall">
+        <div class="status-dot loading" id="overallDot"></div>
+        <span class="status-overall-text" id="overallText">Fetching status...</span>
       </div>
-      <!-- Replace the src with your actual Uptime Kuma public status page embed URL -->
-      <!-- In Uptime Kuma: Settings > Status Pages > your page > "Embed" to get the iframe src -->
-      <iframe
-        src="https://uptime.labscamover9.com/status/lab"
-        title="Service Status"
-        loading="lazy"
-        allow="none"
-        sandbox="allow-scripts allow-same-origin">
-      </iframe>
+      <span class="status-updated" id="statusUpdated"></span>
     </div>
+
+    <!-- skeleton loaders shown while fetching -->
+    <div class="status-loading-grid" id="statusSkeleton">
+      <div class="status-skeleton"></div>
+      <div class="status-skeleton"></div>
+      <div class="status-skeleton"></div>
+      <div class="status-skeleton"></div>
+      <div class="status-skeleton"></div>
+      <div class="status-skeleton"></div>
+    </div>
+
+    <!-- monitors render here -->
+    <div class="status-grid" id="statusGrid" style="display:none"></div>
+
+    <!-- error state -->
+    <div class="status-error" id="statusError" style="display:none">
+      <p>Could not reach the status API. The homelab may be unreachable from your network.</p>
+      <a href="https://uptime.labscamover9.com/status/lab" target="_blank" rel="noopener" class="btn-g">Check Status Page Directly ↗</a>
+    </div>
+
     <div class="status-link">
       <a href="https://uptime.labscamover9.com/status/lab" target="_blank" rel="noopener" class="btn-g">Open Full Status Page ↗</a>
     </div>
@@ -400,5 +435,107 @@
 </footer>
 
 <script src="site.js"></script>
+<script>
+// ── UPTIME KUMA STATUS WIDGET ──
+var STATUS_API = 'https://uptime.labscamover9.com/api/status-page/lab';
+var HEARTBEAT_API = 'https://uptime.labscamover9.com/api/status-page/heartbeat/lab';
+
+function statusClass(val) {
+  if (val === 1) return 'up';
+  if (val === 2) return 'partial';
+  if (val === 0) return 'down';
+  return 'loading';
+}
+function statusText(val) {
+  if (val === 1) return 'Operational';
+  if (val === 2) return 'Degraded';
+  if (val === 0) return 'Down';
+  return 'Unknown';
+}
+
+function renderStatus(monitors, heartbeats) {
+  var grid     = document.getElementById('statusGrid');
+  var skeleton = document.getElementById('statusSkeleton');
+  var error    = document.getElementById('statusError');
+  var dot      = document.getElementById('overallDot');
+  var text     = document.getElementById('overallText');
+  var updated  = document.getElementById('statusUpdated');
+
+  skeleton.style.display = 'none';
+  error.style.display    = 'none';
+  grid.style.display     = 'grid';
+
+  var allUp = true, anyDown = false;
+  var html = '';
+
+  monitors.forEach(function(m) {
+    var hb   = heartbeats[m.id] || [];
+    var last = hb[hb.length - 1] || {};
+    var st   = last.status !== undefined ? last.status : -1;
+    var ping = last.ping ? last.ping + 'ms' : '—';
+    if (st !== 1) allUp = false;
+    if (st === 0) anyDown = true;
+
+    html += '<div class="status-card">'
+          + '<div class="status-card-dot ' + statusClass(st) + '"></div>'
+          + '<div class="status-card-info">'
+          + '<div class="status-card-name">' + m.name + '</div>'
+          + '<div class="status-card-meta">' + statusText(st) + '</div>'
+          + '</div>'
+          + '<span class="status-card-ping">' + (st === 1 ? ping : '') + '</span>'
+          + '</div>';
+  });
+
+  grid.innerHTML = html;
+
+  var overall = allUp ? 'up' : (anyDown ? 'down' : 'partial');
+  var overallMsg = allUp ? 'All systems operational'
+                 : anyDown ? 'Some services are down'
+                 : 'Some services degraded';
+  dot.className  = 'status-dot ' + overall;
+  text.textContent = overallMsg;
+
+  var now = new Date();
+  updated.textContent = 'Updated ' + now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+}
+
+function showError() {
+  document.getElementById('statusSkeleton').style.display = 'none';
+  document.getElementById('statusGrid').style.display     = 'none';
+  document.getElementById('statusError').style.display    = 'block';
+  document.getElementById('overallDot').className         = 'status-dot down';
+  document.getElementById('overallText').textContent      = 'Status unavailable';
+}
+
+function fetchStatus() {
+  // fetch monitors list and heartbeats in parallel
+  Promise.all([
+    fetch(STATUS_API).then(function(r){ return r.json(); }),
+    fetch(HEARTBEAT_API).then(function(r){ return r.json(); })
+  ]).then(function(results) {
+    var page       = results[0];
+    var heartbeats = results[1].heartbeatList || {};
+    var monitors   = [];
+
+    // publicGroupList contains monitor groups with monitorList inside
+    if (page.publicGroupList) {
+      page.publicGroupList.forEach(function(group) {
+        if (group.monitorList) {
+          group.monitorList.forEach(function(m) { monitors.push(m); });
+        }
+      });
+    }
+
+    if (monitors.length === 0) { showError(); return; }
+    renderStatus(monitors, heartbeats);
+  }).catch(function() {
+    showError();
+  });
+}
+
+// initial fetch + refresh every 60s
+fetchStatus();
+setInterval(fetchStatus, 60000);
+</script>
 </body>
 </html>
