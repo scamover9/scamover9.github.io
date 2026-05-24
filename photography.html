@@ -19,15 +19,15 @@
 .ph-gear { display: flex; gap: 0.5rem; flex-wrap: wrap; animation: fu 0.5s 0.55s both; }
 .gear-tag { font-family: 'Space Mono', monospace; font-size: 0.56rem; padding: 0.2rem 0.55rem; border-radius: 4px; background: rgba(37,99,196,0.1); color: var(--blue-glow); border: 1px solid rgba(59,130,246,0.2); letter-spacing: 0.05em; }
 
-/* piwigo note */
-.piwigo-banner {
+/* immich banner */
+.immich-banner {
   background: var(--card); border: 1px solid var(--border); border-radius: 10px;
   padding: 1.4rem 1.6rem; display: flex; align-items: center; gap: 1.2rem;
   margin-bottom: 2.5rem; flex-wrap: wrap;
 }
-.piwigo-banner-icon { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--blue-glow); background: rgba(37,99,196,0.12); border: 1px solid rgba(59,130,246,0.2); border-radius: 6px; padding: 0.4rem 0.65rem; flex-shrink: 0; }
-.piwigo-banner-text { flex: 1; font-size: 0.82rem; color: var(--text-dim); line-height: 1.7; }
-.piwigo-banner-text strong { color: var(--text); font-weight: 500; }
+.immich-banner-icon { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--blue-glow); background: rgba(37,99,196,0.12); border: 1px solid rgba(59,130,246,0.2); border-radius: 6px; padding: 0.4rem 0.65rem; flex-shrink: 0; }
+.immich-banner-text { flex: 1; font-size: 0.82rem; color: var(--text-dim); line-height: 1.7; }
+.immich-banner-text strong { color: var(--text); font-weight: 500; }
 
 /* album grid */
 .album-section { margin-bottom: 3.5rem; }
@@ -77,7 +77,7 @@
 @media (max-width: 768px) {
   #hero-photo { padding: 3rem 1.35rem 2.5rem; }
   .album-grid { grid-template-columns: 1fr 1fr; }
-  .piwigo-banner { flex-direction: column; align-items: flex-start; }
+  .immich-banner { flex-direction: column; align-items: flex-start; }
 }
 @media (max-width: 480px) {
   .album-grid { grid-template-columns: 1fr; }
@@ -122,106 +122,90 @@
 
   <!-- PAGE HEADER -->
   <div id="hero-photo">
-    <div class="ph-pre">// self-hosted · film lenses · manual focus</div>
+    <div class="ph-pre">// self-hosted · digital &amp; vintage glass · curated collections</div>
     <h1 class="ph-title">Photo <span>Albums</span></h1>
-    <p class="ph-sub">Photography shot on manual lenses. Organized by subject and date, hosted on a self-managed Piwigo gallery at photos.labscamover9.com. New albums added as rolls get processed.</p>
+    <p class="ph-sub">Aviation, wildlife, and street photography. Organized by collection and hosted on a self-managed Immich instance at pictures.labscamover9.com.</p>
     <div class="ph-gear">
-      <span class="gear-tag">MC Rokkor-X 50mm f/1.4</span>
-      <span class="gear-tag">Vivitar Series 1 70-210mm</span>
-      <span class="gear-tag">Piwigo — Self-Hosted</span>
+      <span class="gear-tag">Sony A7R III</span>
+      <span class="gear-tag">Tamron 70-300mm f/4.5-6.3</span>
+      <span class="gear-tag">Immich — Self-Hosted</span>
     </div>
   </div>
 
   <section style="border-bottom:none">
 
-    <!-- Piwigo setup note -->
-    <div class="piwigo-banner fade-item">
-      <span class="piwigo-banner-icon">// PIWIGO</span>
-      <p class="piwigo-banner-text">
-        Full gallery is hosted at <strong>photos.labscamover9.com</strong> powered by Piwigo.
-        Albums below link directly to individual Piwigo albums.
-        Once Piwigo is set up, replace the placeholder links with your actual album URLs.
+    <!-- Immich setup note -->
+    <div class="immich-banner fade-item">
+      <span class="immich-banner-icon">// IMMICH</span>
+      <p class="immich-banner-text">
+        Public collections are managed securely at <strong>pictures.labscamover9.com</strong>.
+        Albums below link directly to isolated share points.
       </p>
-      <a href="https://photos.labscamover9.com" target="_blank" rel="noopener" class="btn-p">Open Gallery ↗</a>
+    </div>
+
+    <!-- Aviation -->
+    <div class="album-section">
+      <div class="album-section-title">Aviation</div>
+      <div class="album-grid">
+        <a href="https://pictures.labscamover9.com/s/lovefield" target="_blank" rel="noopener" class="album-card fade-item">
+          <div class="album-thumb">
+            <!-- Replace with a local thumbnail image path when ready, e.g., src="thumbs/lovefield.jpg" -->
+            <img src="https://pictures.labscamover9.com/api/assets/placeholder-if-needed" alt="Lovefield" style="display:none;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="album-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              <span>Lovefield Gallery</span>
+            </div>
+            <span class="album-status live">Live</span>
+          </div>
+          <div class="album-body">
+            <div class="album-name">Dallas Love Field Spotting</div>
+            <div class="album-meta">Tamron 70-300mm · Aviation</div>
+            <div class="album-count">43 items</div>
+          </div>
+        </a>
+      </div>
     </div>
 
     <!-- Wildlife / Nature -->
     <div class="album-section">
       <div class="album-section-title">Wildlife &amp; Nature</div>
       <div class="album-grid">
-        <a href="https://photos.labscamover9.com/index.php?/category/ducks" target="_blank" rel="noopener" class="album-card fade-item">
+        <a href="https://pictures.labscamover9.com/s/duck" target="_blank" rel="noopener" class="album-card fade-item">
           <div class="album-thumb">
             <div class="album-placeholder">
               <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-              <span>Add cover photo</span>
+              <span>Duck Gallery</span>
             </div>
-            <span class="album-status soon">Coming Soon</span>
+            <span class="album-status live">Live</span>
           </div>
           <div class="album-body">
             <div class="album-name">Ducks at the Pond</div>
-            <div class="album-meta">Rokkor-X 50mm · Wildlife</div>
+            <div class="album-meta">Digital Portfolio · Wildlife</div>
+            <div class="album-count">27 items</div>
           </div>
         </a>
       </div>
     </div>
 
-    <!-- Automotive -->
+    <!-- Architecture & Street -->
     <div class="album-section">
-      <div class="album-section-title">Automotive</div>
+      <div class="album-section-title">Architecture &amp; Street</div>
       <div class="album-grid">
-        <a href="https://photos.labscamover9.com/index.php?/category/cars" target="_blank" rel="noopener" class="album-card fade-item">
-          <div class="album-thumb">
-            <div class="album-placeholder">
-              <svg viewBox="0 0 24 24"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-              <span>Add cover photo</span>
-            </div>
-            <span class="album-status soon">Coming Soon</span>
-          </div>
-          <div class="album-body">
-            <div class="album-name">Cars</div>
-            <div class="album-meta">Vivitar 70-210mm · Automotive</div>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!-- Astrophotography -->
-    <div class="album-section">
-      <div class="album-section-title">Astrophotography</div>
-      <div class="album-grid">
-        <a href="https://photos.labscamover9.com/index.php?/category/lunar-eclipse" target="_blank" rel="noopener" class="album-card fade-item">
+        <a href="https://pictures.labscamover9.com/s/waxahachie" target="_blank" rel="noopener" class="album-card fade-item">
           <div class="album-thumb">
             <div class="album-placeholder">
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-              <span>Add cover photo</span>
+              <span>Waxahachie Gallery</span>
             </div>
-            <span class="album-status soon">Coming Soon</span>
+            <span class="album-status live">Live</span>
           </div>
           <div class="album-body">
-            <div class="album-name">Lunar Eclipse</div>
-            <div class="album-meta">Vivitar 70-210mm · Astrophotography</div>
-          </div>
-        </a>
-        <a href="https://photos.labscamover9.com/index.php?/category/aurora" target="_blank" rel="noopener" class="album-card fade-item">
-          <div class="album-thumb">
-            <div class="album-placeholder">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-              <span>Add cover photo</span>
-            </div>
-            <span class="album-status soon">Coming Soon</span>
-          </div>
-          <div class="album-body">
-            <div class="album-name">Aurora Borealis</div>
-            <div class="album-meta">Wide · Night sky</div>
+            <div class="album-name">Waxahachie</div>
+            <div class="album-meta">Street &amp; Historic Architecture</div>
+            <div class="album-count">102 items</div>
           </div>
         </a>
       </div>
-    </div>
-
-    <!-- Full gallery CTA -->
-    <div class="gallery-cta fade-item">
-      <p>All albums live in Piwigo at <strong style="color:var(--text)">photos.labscamover9.com</strong>. New albums are added as photos get processed and organized. The gallery supports full-res viewing, date-based browsing, and category filtering.</p>
-      <a href="https://photos.labscamover9.com" target="_blank" rel="noopener" class="btn-p">Open Full Gallery ↗</a>
     </div>
 
   </section>
@@ -229,7 +213,7 @@
 </div><!-- end .page -->
 
 <footer>
-  <span class="footer-copy">// labscamover9.com · Sammy Campos Rivera · 2025</span>
+  <span class="footer-copy">// labscamover9.com · Sammy Campos Rivera · 2026</span>
   <div class="footer-links">
     <a href="index.html">Home</a>
     <a href="https://scamover9.com" target="_blank" rel="noopener">Portfolio</a>
